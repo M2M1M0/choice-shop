@@ -9,7 +9,7 @@ const SDK_CONFIG = {
   appCode: 'C61nWLWF',//'LE5s6Zu0',
   merchantCode: '908115214270684',//'MERCHANT_001',
   apiKey: process.env.NEXT_PUBLIC_CBE_API_KEY || '',
-  appName: 'CBE Mini Shop',
+  appName: 'Choice Mini Shop',
   apiBaseUrl: 'https://qaapisuperapp.cbe.com.et/api/v1/cbesuperapp',
 };
 
@@ -59,12 +59,12 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
 
     // Set up callback handlers
     window.handleAccessToken = async (customerIdentifier: string) => {
-      console.log('Access UserIdentifier received From CBE SuperApp:', customerIdentifier);
-      
+      console.log('Access UserIdentifier received From Choice SuperApp:', customerIdentifier);
+
       try {
         setIsLoading(true);
 
-       
+
         const response = await axios.post(
           '/api/cbe-client-token',
           {
@@ -78,29 +78,29 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
           }
         );
 
-        console.log('CBE API Response:', response.data);
+        console.log('Choice API Response:', response.data);
 
         const clientToken = response.data?.token || response.data?.data?.token || response.data?.access_token;
-        
+
         if (clientToken) {
           setAccessToken(clientToken);
           setIsLoading(false);
-          
+
           // Store tokens in session
           if (typeof sessionStorage !== 'undefined') {
             sessionStorage.setItem('cbe_access_token', customerIdentifier);
             sessionStorage.setItem('cbe_client_token', clientToken);
           }
-          
+
           console.log('Login successful, token stored');
         } else {
           throw new Error('No token received from API');
         }
       } catch (error) {
-        console.error('Error calling CBE API:', error);
+        console.error('Error calling Choice API:', error);
         setIsLoading(false);
-        
-       // setAccessToken(customerIdentifier);
+
+        // setAccessToken(customerIdentifier);
         if (typeof sessionStorage !== 'undefined') {
           sessionStorage.setItem('cbe_access_token', customerIdentifier);
         }
@@ -119,12 +119,12 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       }
       console.log('Location Permission Result:', result);
       setPermissions(result as PermissionResult[]);
-      
+
       const cameraPerm = (result as PermissionResult[]).find(p => p.permission === 'Camera');
       if (cameraPerm) {
         setCameraPermission(cameraPerm.status);
       }
-      
+
       // If location permission granted, fetch location
       const locationPerm = (result as PermissionResult[]).find(p => p.permission === 'Location');
       if (locationPerm?.status === 'granted') {
@@ -151,12 +151,12 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
     checkSDK();
 
     const handleAccessToken = async (customerIdentifier: string) => {
-      console.log('Access UserIdentifier received From CBE SuperApp:', customerIdentifier);
-      
+      console.log('Access UserIdentifier received From Choice SuperApp:', customerIdentifier);
+
       try {
         setIsLoading(true);
 
-       
+
         const response = await axios.post(
           '/api/cbe-client-token',
           {
@@ -170,19 +170,19 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
           }
         );
 
-        console.log('CBE API Response:', response.data);
+        console.log('Choice API Response:', response.data);
 
         const clientToken = response.data?.token || response.data?.data?.token || response.data?.access_token;
-        
+
         if (clientToken) {
           setAccessToken(clientToken);
           setIsLoading(false);
-          
+
           if (typeof sessionStorage !== 'undefined') {
             sessionStorage.setItem('cbe_access_token', customerIdentifier);
             sessionStorage.setItem('cbe_client_token', clientToken);
           }
-          
+
           console.log('Login successful, token stored');
         } else {
           throw new Error('No token received from API');
@@ -190,8 +190,8 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         console.error('Error calling CBE API:', error);
         setIsLoading(false);
-        
-       // setAccessToken(customerIdentifier);
+
+        // setAccessToken(customerIdentifier);
         if (typeof sessionStorage !== 'undefined') {
           sessionStorage.setItem('cbe_access_token', customerIdentifier);
         }
@@ -201,7 +201,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
     handleAccessToken('1234567890');
 
 
- 
+
 
     if (typeof sessionStorage !== 'undefined') {
       const storedToken = sessionStorage.getItem('cbe_access_token');
@@ -221,7 +221,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(() => {
     setIsLoading(true);
-    
+
     if (!window.cbesuperapp) {
       console.log('SDK not available - simulating login');
       // Simulate login for testing
@@ -237,7 +237,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    console.log('Fetching access token from CBE SuperApp');
+    console.log('Fetching access token from Choice SuperApp');
 
     const payload = JSON.stringify({
       functionName: 'fetchAccessToken',
@@ -262,10 +262,10 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   //handleAccessToken('1234567890');
- 
+
 
   const initiatePayment = useCallback(async (amount: number, reference: string, title: string) => {
-     
+
     if (!window.cbesuperapp) {
       console.log('SDK not available for payment');
       setTimeout(() => {
@@ -399,7 +399,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
 
   const openCamera = useCallback((callback: (result: string) => void) => {
     setCameraCallback(() => callback);
-    
+
     if (!window.cbesuperapp) {
       console.log('SDK not available for camera - simulating scan');
       // Simulate a barcode scan result

@@ -19,27 +19,27 @@ export default function PaymentButton({ onPaymentSuccess }: PaymentButtonProps) 
   useEffect(() => {
     if (paymentResult) {
       setIsProcessing(false);
-      
+
       if (paymentResult.success || paymentResult.transaction_status === 'PAID') {
         onPaymentSuccess();
       }
-      
-  
+
+
       clearPaymentResult();
     }
   }, [paymentResult, onPaymentSuccess, clearPaymentResult]);
 
   const handlePayment = () => {
     if (isDisabled) return;
-    
+
     setIsProcessing(true);
-    
+
     const order = createOrder();
 
     initiatePayment(
       total,
       order.id,
-      `CBE-Shop Order - ${items.length} item(s)`
+      `Choice-Shop Order - ${items.length} item(s)`
     );
   };
 
@@ -60,7 +60,7 @@ export default function PaymentButton({ onPaymentSuccess }: PaymentButtonProps) 
             <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
             <line x1="1" y1="10" x2="23" y2="10" />
           </svg>
-          Pay with CBE SuperApp
+          Pay with Choice SuperApp
           <span className="payment-amount">{formatCurrency(total)}</span>
         </>
       )}
