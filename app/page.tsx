@@ -146,7 +146,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
-          <p>Powered by <strong>CBE SuperApp</strong></p>
+          <p>Powered by <strong>Choice SuperApp</strong></p>
           <p className="footer-tagline">Shop local, support Ethiopian artisans 🇪🇹</p>
         </div>
       </footer>
