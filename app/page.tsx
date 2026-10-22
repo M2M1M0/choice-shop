@@ -8,6 +8,7 @@ import CategoryFilter from './components/CategoryFilter';
 import LoginPage from './components/LoginPage';
 import { products, categories } from './data/products';
 import { useCBESuperApp } from './context/CBESuperAppContext';
+import { Loader2 } from 'lucide-react';
 
 
 export default function HomePage() {
@@ -21,21 +22,21 @@ export default function HomePage() {
       import('vconsole').then((VConsole) => {
         new VConsole.default({
           theme: 'dark', // Optional: 'light' or 'dark'
-         
+
         });
       }).catch((error) => {
         console.error('Failed to load VConsole:', error);
       });
     }
-  }, []); 
+  }, []);
 
- 
+
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
+        product.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
@@ -51,9 +52,8 @@ export default function HomePage() {
     return (
       <div className="loading-screen">
         <div className="loading-content">
-          <span className="loading-logo">🛍️</span>
-          <div className="loading-spinner"></div>
-          <p>Connecting to CBE SuperApp...</p>
+          <Loader2 className="loading-spinner-icon animate-spin" />
+          <p className="loading-text">Connecting to Choice SuperApp...</p>
         </div>
       </div>
     );
@@ -62,8 +62,9 @@ export default function HomePage() {
   return (
     <div className="app">
       <Header />
+
       <CartDrawer />
-      
+
       <main className="main-content">
         {/* Hero Section */}
         <section className="hero">
@@ -123,7 +124,7 @@ export default function HomePage() {
             </h2>
             <span className="product-count">{filteredProducts.length} items</span>
           </div>
-          
+
           {filteredProducts.length === 0 ? (
             <div className="no-products">
               <span className="no-products-icon">🔍</span>

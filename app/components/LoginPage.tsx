@@ -15,13 +15,13 @@ export default function LoginPage() {
 
       {/* Content */}
       <div className="login-content">
-   
+
         <div className="login-header">
           <div className="login-logo">
             <span className="logo-emoji">🛍️</span>
           </div>
           <h1 className="login-title">
-            CBE-Shop<span className="accent">Shop</span>
+            Choice <span className="accent">Shop</span>
           </h1>
           <p className="login-tagline">Ethiopian Marketplace</p>
         </div>
@@ -48,7 +48,7 @@ export default function LoginPage() {
 
         {/* Login Button */}
         <div className="login-actions">
-          <button 
+          <button
             className={`cbe-login-btn ${isLoading ? 'loading' : ''}`}
             onClick={login}
             disabled={isLoading}
@@ -61,19 +61,20 @@ export default function LoginPage() {
             ) : (
               <>
                 <div className="cbe-logo">
-                  <svg viewBox="0 0 40 40" fill="none">
-                    <rect width="40" height="40" rx="8" fill="#0d4f3c"/>
-                    <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">CBE</text>
-                  </svg>
+                  {/* <svg viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="#0d4f3c" />
+                    <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Choice</text>
+                  </svg> */}
+                  <span className="text-sm">🛍️</span>
                 </div>
-                <span>Login with CBE SuperApp</span>
+                <span>Login with Choice SuperApp</span>
               </>
             )}
           </button>
-          
+
           <p className="login-hint">
             Secure authentication powered by<br />
-            <strong>Commercial Bank of Ethiopia</strong>
+            <strong>Choice Superapp</strong>
           </p>
         </div>
 

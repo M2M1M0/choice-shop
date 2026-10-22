@@ -67,7 +67,7 @@ export default function CheckoutPage() {
             </div>
           </div>
           <p className="success-message">
-            Thank you for shopping with CBE-Shop! 🎉<br />
+            Thank you for shopping with Choice-Shop! 🎉<br />
             You will receive updates about your order.
           </p>
           <Link href="/" className="new-order-btn" onClick={handleNewOrder}>
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
             onSelect={setDeliveryOption}
           />
           {deliveryOption && (
-            <button 
+            <button
               className="continue-btn"
               onClick={() => setCurrentStep('payment')}
             >
@@ -157,17 +157,17 @@ export default function CheckoutPage() {
           </section>
         )} */}
 
-       
+
         <section className={`checkout-section ${currentStep === 'payment' ? 'active' : ''}`}>
           <OrderSummary />
           <PaymentButton onPaymentSuccess={handlePaymentSuccess} />
-          
+
           <div className="payment-security">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
               <path d="M7 11V7a5 5 0 0110 0v4" />
             </svg>
-            <span>Secured by CBE SuperApp Payment Gateway</span>
+            <span>Secured by Choice SuperApp Payment Gateway</span>
           </div>
         </section>
       </main>

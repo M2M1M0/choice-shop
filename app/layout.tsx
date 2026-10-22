@@ -17,9 +17,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CBE-Shop - Ethiopian Marketplace",
-  description: "Discover authentic Ethiopian products - coffee, spices, crafts and more. Powered by CBE SuperApp.",
-  keywords: ["Ethiopian", "marketplace", "coffee", "spices", "crafts", "CBE", "SuperApp"],
+  title: "Choice-Shop - Ethiopian Marketplace",
+  description: "Discover authentic Ethiopian products - coffee, spices, crafts and more. Powered by Choice SuperApp.",
+  keywords: ["Ethiopian", "marketplace", "coffee", "spices", "crafts", "Choice", "SuperApp"],
 };
 
 export const viewport: Viewport = {
