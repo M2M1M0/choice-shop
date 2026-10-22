@@ -5,7 +5,6 @@ import { useCBESuperApp } from '../context/CBESuperAppContext';
 
 export default function LoginPage() {
   const { login, isLoading } = useCBESuperApp();
-
   return (
     <div className="login-page">
       <div className="login-bg">
@@ -15,7 +14,7 @@ export default function LoginPage() {
 
       {/* Content */}
       <div className="login-content">
-   
+
         <div className="login-header">
           <div className="login-logo">
             <span className="logo-emoji">🛍️</span>
@@ -48,7 +47,7 @@ export default function LoginPage() {
 
         {/* Login Button */}
         <div className="login-actions">
-          <button 
+          <button
             className={`cbe-login-btn ${isLoading ? 'loading' : ''}`}
             onClick={login}
             disabled={isLoading}
@@ -62,7 +61,7 @@ export default function LoginPage() {
               <>
                 <div className="cbe-logo">
                   <svg viewBox="0 0 40 40" fill="none">
-                    <rect width="40" height="40" rx="8" fill="#0d4f3c"/>
+                    <rect width="40" height="40" rx="8" fill="#0d4f3c" />
                     <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">CBE</text>
                   </svg>
                 </div>
@@ -70,7 +69,7 @@ export default function LoginPage() {
               </>
             )}
           </button>
-          
+
           <p className="login-hint">
             Secure authentication powered by<br />
             <strong>Commercial Bank of Ethiopia</strong>
