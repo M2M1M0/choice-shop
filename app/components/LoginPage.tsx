@@ -5,7 +5,6 @@ import { useCBESuperApp } from '../context/CBESuperAppContext';
 
 export default function LoginPage() {
   const { login, isLoading } = useCBESuperApp();
-
   return (
     <div className="login-page">
       <div className="login-bg">
