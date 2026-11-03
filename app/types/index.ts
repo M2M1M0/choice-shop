@@ -1,4 +1,4 @@
-export interface CBESuperAppSDK {
+export interface ChoiceSuperAppSDK {
   send: (payload: string) => void;
 }
 
@@ -96,7 +96,7 @@ export interface Order {
 
 declare global {
   interface Window {
-    cbesuperapp?: CBESuperAppSDK;
+    choicesuperapp?: ChoiceSuperAppSDK;
     handleAccessToken?: (token: string) => void;
     handlePaymentResult?: (result: PaymentResult) => void;
     handlePermissionResult?: (result: PermissionResult[] | string) => void;
@@ -104,5 +104,5 @@ declare global {
   }
 }
 
-export {};
+export { };
 

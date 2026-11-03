@@ -1,16 +1,16 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
 import type { PaymentResult, PermissionResult, LocationResult, OrderPayload, AuthPayload } from '../types';
 import axios from 'axios';
 
 // SDK Configuration - Replace with actual values from CBE
 const SDK_CONFIG = {
-  appCode: 'C61nWLWF',//'LE5s6Zu0',
-  merchantCode: '908115214270684',//'MERCHANT_001',
-  apiKey: process.env.NEXT_PUBLIC_CBE_API_KEY || '',
-  appName: 'Choice Mini Shop',
-  apiBaseUrl: 'https://qaapisuperapp.cbe.com.et/api/v1/cbesuperapp',
+  appCode: '2P9rSBfe',//'LE5s6Zu0',
+  merchantCode: 'MINIMRC-8218175674',//'MERCHANT_001',
+  apiKey: 'eEwIV4kSHkzrjLb2jVBdACDDZHFfR6OsiaVgRneL9yg=',
+  appName: 'Choice Shop',
+  apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://dev.choicemicrofinance.com/api/v1/choicesuperapp',
 };
 
 interface CBESuperAppContextType {
@@ -47,15 +47,12 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
   // Initialize SDK and set up callbacks
   useEffect(() => {
     const checkSDK = () => {
-      if (typeof window !== 'undefined' && window.cbesuperapp) {
+      if (typeof window !== 'undefined' && window.choicesuperapp) {
         setIsSDKAvailable(true);
         return true;
       }
       return false;
     };
-
-
-
 
     // Set up callback handlers
     window.handleAccessToken = async (customerIdentifier: string) => {
@@ -64,16 +61,16 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       try {
         setIsLoading(true);
 
-
         const response = await axios.post(
-          '/api/cbe-client-token',
+          `${SDK_CONFIG?.apiBaseUrl}/mini-apps/client/token`,
           {
             app_code: SDK_CONFIG.appCode,
-            // customer_identifier: customerIdentifier,
+            customer_identifier: customerIdentifier,
           },
           {
             headers: {
               'Content-Type': 'application/json',
+              'x-api-key': SDK_CONFIG.apiKey,
             },
           }
         );
@@ -81,6 +78,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
         console.log('Choice API Response:', response.data);
 
         const clientToken = response.data?.token || response.data?.data?.token || response.data?.access_token;
+
 
         if (clientToken) {
           setAccessToken(clientToken);
@@ -158,14 +156,15 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
 
 
         const response = await axios.post(
-          '/api/cbe-client-token',
+          `${process.env.NEXT_PUBLIC_API_URL}/mini-apps/client/token`,
           {
             app_code: SDK_CONFIG.appCode,
-            // customer_identifier: customerIdentifier,
+            customer_identifier: customerIdentifier,
           },
           {
             headers: {
               'Content-Type': 'application/json',
+              'x-api-key': SDK_CONFIG.apiKey,
             },
           }
         );
@@ -198,7 +197,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    handleAccessToken('1234567890');
+    // handleAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMWZiZWU1ODk3ZmY5OGU3Y2M0ZDVhZjA2MzdiNjA2OWMyZjAwMDA4OTE1NDAxMjUyNWYxZWVmZDAyOWUzOGNmYjhhOTc1ZjRkNGRiOWUwNjE5OGM4MDc3ODc2NTQwYzRmMjMyM2UxNTU0ZGU5MWQ4YTIxYzdmNmNhMTg5OTUwYmE1ODIwODJkZjQ3ZDkzZTlmMDZlYmRhMGE4MWMyODBjM2FlMjdhMGIyZDZjNGRiMGY2YjdmNDRkNzVkOWVhMzA0MWU0OGFkOTliNzUxNTE4ZTFiNzQxZjI0MWExMDZmMWZkY2Q5N2MwZmU1ZTNkYzIzYjk2ZGYxMzg3MDVhMmY2NTRiNmQwZWZkNGU3ZDc1NWExODZlODk3NTY2M2FiZTIyMmM2ZTM2YjVlMzgzNjRlYjJkMjAyZWQ4NWZiN2VkMzY1NDk0OWRlNjJhODljZDE4YzRhNGNlYjAxODg5MDkwZTFlZmQ5MjQ1ODUxMGY4MjUxY2IzNzI4ZDdmODAxMmY4YzY2YmNhN2M5YmRkMDQ1ZGI3NGE0NDdjYmRiYzQ1ZDU0N2M1MzQ0ZGY1NmM4NTU5YWExM2UzNjRhZDYyY2RlYWUwYmRkZjA0OTkxOTg3ZDNjYjZlYmU2NmIyZGJhZjdmODBkNjlkYWEzZDhjN2UzMDdmMjAxMWNiYzIxY2U2N2QyMzU4NmVkODY3Zjc5ZjVlZTY0MDM2OTc2ZDQ3ODJiZjc5Y2YzYjEwYTk5NTdmYmVmODQzNTljYzM0MDRkNWI1ZmYxZDlkMDI4ZDgwNjc0ODgwYTQ3YTFhZTQwZThjMmYzNzA4NjUwYzQwOTg1MTA5NmQ4YTk2NDZiYTlkMGRiNDQ5OTc5ZmY0OGYxNmUyMDIzYjMxYjczZGNhMjg0MGRmZjk5ZGVmMjdlMGMyZGVhOGRiZWYyZTQyNTA1ZmMwZTkyMmM1YWE2NGMxYjk4OWVlOTJlODkzMjI5ZTgxNWY0NjU1Zjk5OWQwMDM1NzJhOThhMzA2NjNiYTljNDBhMjU1ODgxNzI4ODEyMTYzYzQ2MjhhN2VmMDgwZmE0Njk1YzE3N2NmOWY2ZDhmMjZiZjQwNWIyN2U3OWU1OGY5MThmYmI0NjUzZjBkYTdhZDM0Yjc3NmM2MDJkOGRkYjEwYTVlZjU1MWZiYzZhNTNlZDRhZGUyZjc5M2UxNTY3YTEyZTBkMGY2NjI4MzY0Njg5OTMyNmVhMzNiN2FhY2M5NzIyMTBmZjZmODE5Mzg1MjRiZWIzNDQ0MjAyYmFhODhkNTllN2U2MGYxNTZhNWYyZDRiNDJlMDZiMmNmZWM1ODgyNWM1OWEzYmM3NGIyNjAzYTRjMTIzZTk3MjE5NjAxNWVkYzUwMzI4OWRiNjU4MzMwZmM3NWM4ZGRiYTAwNmIzZmRhMDM0MmFhZWM0Y2RiM2E1MDkzZjNkNGU0ZTZjNzdmZGMzNzU3YjQ4ZWFiNDRkODhiZWQxMTBkNDc5YTMwOTliMDI3Y2E4NWUwMGRlYTY4YzVkYTg4N2ZhZmFkZGY2MDE0NGI5YWUyZmQwNTQwYmE3MGFiMjBjYWYxZTA4YWNjN2RmZDNjODM4ZDkxYzFjYWE4ZDg3YmYxZGM3M2UxOGI1OSIsImV4cCI6MTc5Mjc2NTAyOX0.nLt2BEbC_kEWKtRaDPjJSE3BTodpk3gbaa-gpH83I64');
 
 
 
@@ -222,11 +221,12 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
   const login = useCallback(() => {
     setIsLoading(true);
 
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available - simulating login');
       // Simulate login for testing
       setTimeout(() => {
         console.log('Simulating login for testing');
+
         const demoToken = 'demo_token_' + Date.now();
         setAccessToken(demoToken);
         setIsLoading(false);
@@ -247,7 +247,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(payload);
+    window.choicesuperapp.send(payload);
   }, []);
 
   const logout = useCallback(() => {
@@ -266,7 +266,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
 
   const initiatePayment = useCallback(async (amount: number, reference: string, title: string) => {
 
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available for payment');
       setTimeout(() => {
         setPaymentResult({
@@ -340,11 +340,11 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(paymentRequest);
+    window.choicesuperapp.send(paymentRequest);
   }, [accessToken]);
 
   const requestLocationPermission = useCallback(() => {
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available for permissions');
       setPermissions([{ permission: 'Location', status: 'granted' }]);
       return;
@@ -358,11 +358,11 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(permissionRequest);
+    window.choicesuperapp.send(permissionRequest);
   }, []);
 
   const requestCameraPermission = useCallback(() => {
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available for camera permission - simulating');
       setCameraPermission('granted');
       setPermissions(prev => [...prev.filter(p => p.permission !== 'Camera'), { permission: 'Camera', status: 'granted' }]);
@@ -377,11 +377,11 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(permissionRequest);
+    window.choicesuperapp.send(permissionRequest);
   }, []);
 
   const getCurrentLocation = useCallback(() => {
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available for location');
       setLocation({ latitude: 9.0054, longitude: 38.7636 });
       return;
@@ -394,13 +394,13 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(locationRequest);
+    window.choicesuperapp.send(locationRequest);
   }, []);
 
   const openCamera = useCallback((callback: (result: string) => void) => {
     setCameraCallback(() => callback);
 
-    if (!window.cbesuperapp) {
+    if (!window.choicesuperapp) {
       console.log('SDK not available for camera - simulating scan');
       // Simulate a barcode scan result
       setTimeout(() => {
@@ -417,7 +417,7 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    window.cbesuperapp.send(cameraRequest);
+    window.choicesuperapp.send(cameraRequest);
   }, []);
 
   const clearPaymentResult = useCallback(() => {
