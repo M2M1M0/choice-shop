@@ -15,16 +15,16 @@ type GenerateOrderAuthRequest = {
 };
 
 export async function POST(req: NextRequest) {
-  const appSecret = process.env.CBE_APP_SECRET;
-  const privateKeyBase64 = process.env.CBE_PRIVATE_KEY;
+  const appSecret = process.env.CHOICE_APP_SECRET || "eEwIV4kSHkzrjLb2jVBdACDDZHFfR6OsiaVgRneL9yg="
+  const privateKeyBase64 = process.env.CHOICE_PRIVATE_KEY || "kTxm2y1RlfgmbDI1MPayD45SwOJTndh9tjdYVhJkcuvXCQOioqdYb/Ywt0TDsfAOkyA7WDujELFDgpY6NuaqDA=="
 
   if (!appSecret || !privateKeyBase64) {
     return NextResponse.json(
       {
         error: "Server is missing signing env vars",
         missing: [
-          !appSecret ? "CBE_APP_SECRET" : null,
-          !privateKeyBase64 ? "CBE_PRIVATE_KEY" : null,
+          !appSecret ? "CHOICE_APP_SECRET" : null,
+          !privateKeyBase64 ? "CHOICE_PRIVATE_KEY" : null,
         ].filter(Boolean),
       },
       { status: 500 }

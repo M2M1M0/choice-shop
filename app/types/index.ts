@@ -7,20 +7,22 @@ export interface AccessTokenCallback {
 }
 
 export interface PaymentResult {
-  ft_number?: string;
-  payment_details?: {
-    app_id: string;
+  data?: {
+    transaction_reference: string;
+    ft_number: string;
+    app_code: string;
     merchant_code: string;
-    merchant_reference: string;
-    title: string;
-    total_amount: number;
+    status: 'PAID' | 'FAILED' | 'PENDING' | string;
+    total_amount: string;
     currency: string;
+    merchant_reference: string;
+    callback_initiated_at: string;
   };
   message?: string;
-  success?: boolean;
-  transaction_status?: 'PAID' | 'FAILED' | 'PENDING';
-  error?: string;
+
 }
+
+
 
 export interface PermissionResult {
   permission: 'Location' | 'Storage' | 'BackgroundLocation' | 'Camera';

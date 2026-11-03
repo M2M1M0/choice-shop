@@ -20,7 +20,7 @@ export default function PaymentButton({ onPaymentSuccess }: PaymentButtonProps) 
     if (paymentResult) {
       setIsProcessing(false);
 
-      if (paymentResult.success || paymentResult.transaction_status === 'PAID') {
+      if (paymentResult.data?.status === 'PAID') {
         onPaymentSuccess();
       }
 

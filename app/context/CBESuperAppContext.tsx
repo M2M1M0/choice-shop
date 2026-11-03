@@ -270,30 +270,33 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       console.log('SDK not available for payment');
       setTimeout(() => {
         setPaymentResult({
-          success: true,
-          ft_number: 'FT' + Date.now(),
-          payment_details: {
-            app_id: SDK_CONFIG.appCode,
+          message: 'Payment completed (Demo)',
+          data: {
+            transaction_reference: 'T' + Date.now(),
+            ft_number: 'FT' + Date.now(),
+            app_code: SDK_CONFIG.appCode,
             merchant_code: SDK_CONFIG.merchantCode,
-            merchant_reference: reference,
-            title: title,
-            total_amount: amount,
+            status: 'PAID',
+            total_amount: amount.toFixed(2),
             currency: 'ETB',
+            merchant_reference: reference,
+            callback_initiated_at: new Date().toISOString(),
           },
-          message: 'Payment confirmed (Demo)',
-          transaction_status: 'PAID',
+          // success: true,
+          // transaction_status: 'PAID',
         });
       }, 2000);
       return;
     }
 
     const orderBase = {
-      app_code: 'C61nWLWF',//'092999', // SDK_CONFIG.appCode,
-      merchant_code: '908115214270684',//,'003411488457437', // SDK_CONFIG.merchantCode,
+      app_code: `${SDK_CONFIG?.appCode}`,//'092999', // SDK_CONFIG.appCode,
+      merchant_code: `${SDK_CONFIG?.merchantCode}`,//,'003411488457437', // SDK_CONFIG.merchantCode,
       merchant_reference: reference,
-      title,
+      title: title,
       total_amount: amount,
       currency: 'ETB',
+      credit_account_number: ''
     };
 
     const authRes = await fetch('/api/cbe-generate-order-auth', {
@@ -318,6 +321,10 @@ export function CBESuperAppProvider({ children }: { children: ReactNode }) {
       sign: string;
       confirm_payload: string;
     };
+
+    console.log(sign, 'sign');
+    console.log(confirm_payload, 'cpmform payloa');
+
 
     const orderPayload: OrderPayload = {
       ...orderBase,
