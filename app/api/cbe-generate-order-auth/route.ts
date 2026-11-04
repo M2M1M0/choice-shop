@@ -15,8 +15,8 @@ type GenerateOrderAuthRequest = {
 };
 
 export async function POST(req: NextRequest) {
-  const appSecret = process.env.NEXT_CHOICE_APP_SECRET || ""
-  const privateKeyBase64 = process.env.NEXT_CHOICE_PRIVATE_KEY || ""
+  const appSecret = process.env.NEXT_PUBLIC_CHOICE_APP_SECRET || ""
+  const privateKeyBase64 = process.env.NEXT_PUBLIC_CHOICE_PRIVATE_KEY || ""
 
   if (!appSecret || !privateKeyBase64) {
     return NextResponse.json(

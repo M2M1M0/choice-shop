@@ -8,7 +8,7 @@ import axios from 'axios';
 const SDK_CONFIG = {
   appCode: '2P9rSBfe',//'LE5s6Zu0',
   merchantCode: 'MINIMRC-8218175674',//'MERCHANT_001',
-  apiKey: process.env.NEXT_CHOICE_APP_SECRET || '',
+  apiKey: process.env.NEXT_PUBLIC_CHOICE_APP_SECRET || '',
   appName: 'Choice Shop',
   apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || '',
 };
