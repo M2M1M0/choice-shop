@@ -6,8 +6,8 @@ import axios from 'axios';
 
 // SDK Configuration - Replace with actual values from CBE
 const SDK_CONFIG = {
-  appCode: '2P9rSBfe',//'LE5s6Zu0',
-  merchantCode: 'MINIMRC-8218175674',//'MERCHANT_001',
+  appCode: process.env.NEXT_PUBLIC_CHOICE_APP_CODE || '',//'LE5s6Zu0',
+  merchantCode: process.env.NEXT_PUBLIC_CHOICE_MERCHANT_CODE || '',//'MERCHANT_001',
   apiKey: process.env.NEXT_PUBLIC_CHOICE_APP_SECRET || '',
   appName: 'Choice Shop',
   apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || '',
